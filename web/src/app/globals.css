@@ -1,0 +1,109 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* Falu Room — Nordic Calm + editorial serif
+   See /Users/prash/projects/openmic/design/DESIGN.md
+   for the full design system rationale.
+
+   Tokens here map DESIGN.md's semantic names to shadcn's Tailwind CSS 4
+   variable slots. Falu red is our sole accent; it maps to shadcn "primary". */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-serif: var(--font-fraunces);
+  --font-sans: var(--font-public-sans);
+
+  /* Radius scale is the discrete DESIGN.md hierarchy — not a linear ramp.
+     Input 4px, button/chip 8px, card/message 12px, modal 16px. */
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+}
+
+:root {
+  /* Warm neutrals — never pure #FFFFFF or #000000 */
+  --background: #F0EDE7;      /* neutral: unbleached paper */
+  --foreground: #2B2823;      /* primary: warm ink */
+  --card: #F7F4EE;             /* surface: linen (elevated) */
+  --card-foreground: #2B2823;  /* on-surface */
+  --popover: #F7F4EE;
+  --popover-foreground: #2B2823;
+
+  /* Falu red — the sole accent. One job: primary interaction. */
+  --primary: #7E4232;          /* tertiary: falu rödfärg */
+  --primary-foreground: #F7F4EE;
+
+  /* Secondary buttons — neutral bg, warm ink text */
+  --secondary: #F0EDE7;
+  --secondary-foreground: #2B2823;
+
+  /* Muted — metadata, timestamps, captions */
+  --muted: #F7F4EE;
+  --muted-foreground: #6A6156; /* secondary: worn hemp */
+
+  /* Accent — subtle hover surfaces (not the falu accent) */
+  --accent: #F7F4EE;
+  --accent-foreground: #2B2823;
+
+  /* Semantic — always derived from the brand family */
+  --destructive: #6E2A28;      /* error: dried oxblood */
+  --success: #4E5F35;          /* success: dry moss */
+
+  /* Structural */
+  --border: #D5CFC4;           /* chalk line */
+  --input: #D5CFC4;
+  --ring: rgba(126, 66, 50, 0.6); /* falu red at 60% for focus rings */
+
+  --radius: 8px;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "kern" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  /* Fraunces carries the reading register — h1/h2/h3 by default.
+     h4-h6 use the working register. See DESIGN.md §Typography. */
+  h1, h2, h3 {
+    @apply font-serif tracking-tight;
+    font-variation-settings: "opsz" 72, "SOFT" 100;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  h1 {
+    line-height: 1.05;
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+  }
+  h4, h5, h6 {
+    @apply font-sans;
+    font-weight: 700;
+  }
+}

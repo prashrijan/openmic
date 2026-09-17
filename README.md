@@ -25,18 +25,27 @@ openmic/
 │   ├── decisions/          ADRs — one file per architectural decision
 │   └── retros/             Post-milestone retrospectives
 ├── design/                 Visual design system, mockups, assets
-│   ├── DESIGN.md           Design system (produced via design-md-planner skill)
+│   ├── DESIGN.md           Falu Room design system
 │   ├── mockups/
 │   └── assets/
-└── app/                    Next.js application (scaffolded in Task #7)
+└── web/                    Next.js application (see web/README.md)
+    ├── src/app/            App Router pages + API routes
+    ├── src/components/     UI components (shadcn/ui + custom)
+    ├── src/lib/            Supabase, Anthropic, auth, rate-limit
+    ├── src/proxy.ts        Next.js 16 edge proxy (guest cookie)
+    └── supabase/           Migrations
 ```
 
-## Tech stack (planned)
+## Tech stack
 
-- **Framework:** Next.js 15 (App Router) + TypeScript
-- **Data / Auth:** Supabase (Postgres + Auth + Storage)
-- **LLM:** Anthropic Claude for text conversation and coaching
+- **Framework:** Next.js 16 (App Router, Turbopack) + TypeScript + React 19
+- **Data / Auth:** Supabase (Postgres + Auth)
+- **LLM (text):** Anthropic Claude — Haiku for conversation turns, Sonnet for feedback reports
 - **Voice (v0.2+):** OpenAI Realtime API for speech-in / speech-out
+- **UI:** Tailwind CSS 4 + shadcn/ui (restyled to Falu Room)
+- **Fonts:** Fraunces (variable serif) + Public Sans (humanist sans), via `next/font/google`
+- **Package manager:** pnpm
+- **Testing:** Vitest + Testing Library + happy-dom
 - **Hosting:** Vercel
 
 ## Roadmap
@@ -47,7 +56,24 @@ openmic/
 
 ## Development
 
-App scaffolding lands in Task #7 of the roadmap. For now, only documentation exists — this is the requirements/design phase of the SDLC.
+Requires Node.js 20+, pnpm (via `brew install pnpm`), and a Supabase project + Anthropic API key.
+
+```bash
+cd web
+cp .env.example .env.local
+# Fill in .env.local with your Supabase URL/keys and Anthropic key.
+# Generate GUEST_COOKIE_HMAC_SECRET with: openssl rand -hex 32
+pnpm install
+pnpm dev             # http://localhost:3000
+pnpm test            # Vitest unit tests
+pnpm typecheck       # TypeScript check
+pnpm build           # Production build
+```
+
+Current state (2026-09-17):
+- ✅ SCOPE, REQUIREMENTS, ARCHITECTURE, DESIGN documents complete
+- ✅ Next.js app scaffolded with Supabase + Anthropic wiring, guest-cookie proxy, and Falu Room design tokens
+- 🟡 v0.1 features (Task #8): scenarios, sessions, chat, feedback reports
 
 ## License
 
