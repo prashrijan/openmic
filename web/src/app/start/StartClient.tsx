@@ -70,11 +70,11 @@ export function StartClient({
       });
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(
-          data.error === "guest_quota_exhausted"
-            ? "You've used your free guest sessions. Sign up to keep practicing."
-            : data.message || data.error || "Failed to start session",
-        );
+        if (data.error === "guest_quota_exhausted") {
+          router.push("/login?reason=quota&next=%2Fstart");
+          return;
+        }
+        throw new Error(data.message || data.error || "Failed to start session");
       }
       router.push(`/session/${data.id}`);
     } catch (err) {
