@@ -20,7 +20,7 @@ This folder is the source of truth for OpenMic. Each document maps to a phase of
 
 ## Design
 
-The design system lives in [`../design/DESIGN.md`](../design/DESIGN.md) and is produced separately during the design phase.
+The design system lives in [`../design/DESIGN.md`](../design/DESIGN.md) — **Falu Room**, Nordic Calm with an editorial-serif accent. Lints clean against `@google/design.md`. Status: 🟢 complete.
 
 ## Legend
 
