@@ -32,13 +32,14 @@ export async function SiteHeader() {
               <Link href="/history" className="text-muted-foreground hover:text-foreground">
                 History
               </Link>
-              <span
-                className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-card text-xs font-medium"
+              <Link
+                href="/account"
+                className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-card text-xs font-medium hover:bg-muted transition"
                 title={email ?? ""}
-                aria-label={email ?? ""}
+                aria-label={`Account: ${email ?? ""}`}
               >
                 {initial}
-              </span>
+              </Link>
               <SignOutButton />
             </>
           ) : (
