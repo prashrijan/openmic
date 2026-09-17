@@ -7,7 +7,7 @@ This folder is the source of truth for OpenMic. Each document maps to a phase of
 | # | Document | Status | Purpose |
 |---|---|---|---|
 | 01 | [Scope](01-scope.md) | 🟡 draft — under review | Problem, users, MVP scope, non-goals, phased release, success criteria, risks |
-| 02 | [Requirements](02-requirements.md) | ⚪ not started | Functional + non-functional requirements, user stories, acceptance criteria |
+| 02 | [Requirements](02-requirements.md) | 🟡 draft — under review | Functional + non-functional requirements, user stories, acceptance criteria |
 | 03 | [Architecture](03-architecture.md) | ⚪ not started | System diagram, data model, API surface, LLM integration, deployment topology |
 | 04 | [API Contracts](04-api-contracts.md) | ⚪ not started | Public API routes, request/response shapes, error codes |
 | 05 | [Testing Strategy](05-testing-strategy.md) | ⚪ not started | Unit / integration / E2E approach, coverage targets, CI |
