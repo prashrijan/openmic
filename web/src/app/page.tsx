@@ -15,14 +15,15 @@ export default function Home() {
           when you&rsquo;re done.
         </p>
         <div className="mt-10 flex items-center gap-4">
-          <button
-            type="button"
-            disabled
-            className="rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition disabled:opacity-70"
+          <a
+            href="/start"
+            className="rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:brightness-95"
           >
             Try a session &mdash; no signup
-          </button>
-          <p className="text-sm text-muted-foreground">Coming soon</p>
+          </a>
+          <p className="text-sm text-muted-foreground">
+            2 free sessions before signup
+          </p>
         </div>
       </section>
 
