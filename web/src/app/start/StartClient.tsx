@@ -92,61 +92,88 @@ export function StartClient({
 
   return (
     <>
-      <section className="mx-auto max-w-4xl px-6 pb-16">
-        <div className="space-y-10">
+      <section className="mx-auto max-w-6xl px-6 pt-4 pb-16 md:pb-20">
+        <div className="space-y-14 md:space-y-16">
           {categoryOrder.map((cat) => {
             const list = scenariosByCategory[cat] ?? [];
             if (list.length === 0) return null;
             return (
               <div key={cat}>
-                <div className="flex items-center gap-2 text-muted-foreground mb-3">
-                  <CategoryIcon
-                    category={cat as ScenarioCategory}
-                    className="w-3.5 h-3.5"
-                  />
-                  <p className="text-xs uppercase tracking-[0.12em]">
-                    {categoryLabels[cat]}
+                <div className="flex items-baseline justify-between gap-4 mb-6 pb-4 border-b border-border">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-card text-primary">
+                      <CategoryIcon
+                        category={cat as ScenarioCategory}
+                        className="w-4 h-4"
+                      />
+                    </span>
+                    <h2 className="font-serif text-2xl md:text-3xl tracking-tight">
+                      {categoryLabels[cat]}
+                    </h2>
+                  </div>
+                  <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
+                    {list.length} scenario{list.length === 1 ? "" : "s"}
                   </p>
                 </div>
-                <div className="grid gap-3 md:grid-cols-2">
-                  {list.map((s) => (
-                    <button
-                      key={s.id}
-                      type="button"
-                      onClick={() => pickScenario(s)}
-                      className={`text-left rounded-lg p-5 transition ${
-                        selectedScenarioId === s.id
-                          ? "bg-card ring-2 ring-primary"
-                          : "bg-card hover:bg-muted"
-                      }`}
-                    >
-                      <h3 className="font-serif text-lg tracking-tight mb-1">
-                        {s.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {s.description}
-                      </p>
-                    </button>
-                  ))}
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {list.map((s) => {
+                    const selected = selectedScenarioId === s.id;
+                    return (
+                      <button
+                        key={s.id}
+                        type="button"
+                        onClick={() => pickScenario(s)}
+                        className={`text-left rounded-lg p-6 transition group ${
+                          selected
+                            ? "bg-card ring-2 ring-primary"
+                            : "bg-card/60 hover:bg-card"
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-2 mb-3">
+                          <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+                            {s.suggested_difficulty}
+                          </p>
+                          <span
+                            aria-hidden
+                            className={`inline-block w-2 h-2 rounded-full transition ${
+                              selected ? "bg-primary" : "bg-border group-hover:bg-primary/40"
+                            }`}
+                          />
+                        </div>
+                        <h3 className="font-serif text-xl leading-snug tracking-tight mb-2">
+                          {s.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {s.description}
+                        </p>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             );
           })}
 
+          {/* Custom topic — featured treatment */}
           <div>
-            <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground mb-3">
-              Or bring your own
-            </p>
+            <div className="flex items-baseline justify-between gap-4 mb-6 pb-4 border-b border-border">
+              <h2 className="font-serif text-2xl md:text-3xl tracking-tight">
+                Or bring your own
+              </h2>
+              <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
+                Custom
+              </p>
+            </div>
             <div
-              className={`rounded-lg p-5 transition bg-card ${
+              className={`rounded-lg p-6 md:p-8 transition ${
                 selectedScenarioId === null && customTopic.length > 0
-                  ? "ring-2 ring-primary"
-                  : ""
+                  ? "bg-card ring-2 ring-primary"
+                  : "bg-card/60"
               }`}
             >
               <label
                 htmlFor="custom-topic"
-                className="block text-sm font-medium mb-2"
+                className="block font-serif text-lg tracking-tight mb-3"
               >
                 Describe what you want to practice
               </label>
@@ -158,14 +185,14 @@ export function StartClient({
                   if (e.target.value.length > 0) pickCustom();
                 }}
                 onFocus={pickCustom}
-                rows={3}
+                rows={4}
                 minLength={20}
                 maxLength={500}
-                placeholder="e.g. 'I want to practice pitching my side project to a stranger at a coffee shop.' (20–500 characters)"
-                className="w-full rounded-md bg-background text-foreground text-sm p-3 outline-none focus:ring-2 focus:ring-primary/60 resize-y"
+                placeholder="e.g. 'I want to practice pitching my side project to a stranger at a coffee shop.'"
+                className="w-full rounded-md bg-background text-foreground text-base p-4 outline-none focus:ring-2 focus:ring-primary/60 resize-y leading-relaxed"
               />
-              <p className="mt-1 text-xs text-muted-foreground">
-                {customTopic.length}/500
+              <p className="mt-2 text-xs text-muted-foreground">
+                {customTopic.length}/500 &middot; needs at least 20 characters
               </p>
             </div>
           </div>
@@ -173,10 +200,14 @@ export function StartClient({
       </section>
 
       {(selectedScenarioId || customTopic.length >= 20) && (
-        <section className="mx-auto max-w-4xl px-6 py-10 border-t border-border">
-          <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground mb-4">
+        <section className="mx-auto max-w-6xl px-6 py-12 md:py-16 border-t border-border">
+          <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground mb-4 inline-flex items-center gap-3">
+            <span className="w-8 h-px bg-primary" />
             Step 2 of 2 &mdash; configure your session
           </p>
+          <h2 className="font-serif text-3xl md:text-4xl tracking-tight leading-tight mb-8 max-w-2xl">
+            Set the shape of the conversation.
+          </h2>
 
           <div className="grid gap-6 md:grid-cols-2">
             <div>
