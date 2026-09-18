@@ -21,9 +21,13 @@ export async function SiteHeader() {
       <div className="mx-auto max-w-6xl px-6 h-14 flex items-center justify-between">
         <Link
           href="/"
-          className="font-serif text-lg tracking-tight"
+          className="inline-flex items-center gap-2 font-serif text-lg tracking-tight hover:text-primary/90 transition"
           style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100' }}
         >
+          <span
+            className="inline-block w-2 h-2 rounded-full bg-primary"
+            aria-hidden
+          />
           OpenMic
         </Link>
         <nav className="flex items-center gap-4 text-sm">

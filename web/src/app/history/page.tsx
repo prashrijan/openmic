@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { ArrowRight, FileText, Sparkles } from "lucide-react";
+import { CategoryIcon } from "@/components/CategoryIcon";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { Difficulty, FeedbackMode, ScenarioCategory } from "@/lib/types";
 import { CATEGORY_LABELS } from "@/lib/types";
@@ -87,21 +89,30 @@ export default async function HistoryPage() {
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
-                      <p className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground mb-1">
-                        {category ? CATEGORY_LABELS[category] : "Custom topic"}
-                        {isActive && (
-                          <span className="ml-2 text-primary">· In progress</span>
+                      <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
+                        {category && (
+                          <CategoryIcon
+                            category={category}
+                            className="w-3 h-3"
+                          />
                         )}
-                      </p>
+                        <p className="text-[11px] uppercase tracking-[0.12em]">
+                          {category ? CATEGORY_LABELS[category] : "Custom topic"}
+                          {isActive && (
+                            <span className="ml-2 text-primary">· In progress</span>
+                          )}
+                        </p>
+                      </div>
                       <h2 className="font-serif text-lg tracking-tight truncate">
                         {title}
                       </h2>
                       {preview && (
-                        <p className="mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-2">
-                          <span className="text-[color:var(--color-success)] uppercase text-[10px] tracking-[0.12em] mr-2">
-                            Strength
-                          </span>
-                          {preview}
+                        <p className="mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-2 flex items-start gap-2">
+                          <Sparkles
+                            className="w-3.5 h-3.5 mt-0.5 shrink-0 text-[color:var(--color-success)]"
+                            strokeWidth={1.5}
+                          />
+                          <span>{preview}</span>
                         </p>
                       )}
                     </div>
@@ -120,13 +131,24 @@ export default async function HistoryPage() {
           })}
         </ul>
 
-        {sessions.length === 0 && (
-          <div className="pt-4">
+        {sessions.length === 0 && !error && (
+          <div className="rounded-lg bg-card/50 border border-border/60 p-10 text-center">
+            <FileText
+              className="w-6 h-6 text-muted-foreground mx-auto mb-3"
+              strokeWidth={1.5}
+            />
+            <p className="text-sm text-foreground mb-1">
+              Your practice history will live here.
+            </p>
+            <p className="text-xs text-muted-foreground mb-6">
+              Every completed session is saved with its feedback report.
+            </p>
             <Link
               href="/start"
-              className="inline-flex rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:brightness-95 transition"
+              className="group inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:brightness-95 transition"
             >
               Start your first session
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </div>
         )}

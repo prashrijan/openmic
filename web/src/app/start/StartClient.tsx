@@ -2,7 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import type { Difficulty, FeedbackMode, Scenario } from "@/lib/types";
+import { ArrowRight } from "lucide-react";
+import { CategoryIcon } from "@/components/CategoryIcon";
+import type {
+  Difficulty,
+  FeedbackMode,
+  Scenario,
+  ScenarioCategory,
+} from "@/lib/types";
 
 interface Props {
   scenariosByCategory: Record<string, Scenario[]>;
@@ -92,9 +99,15 @@ export function StartClient({
             if (list.length === 0) return null;
             return (
               <div key={cat}>
-                <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground mb-3">
-                  {categoryLabels[cat]}
-                </p>
+                <div className="flex items-center gap-2 text-muted-foreground mb-3">
+                  <CategoryIcon
+                    category={cat as ScenarioCategory}
+                    className="w-3.5 h-3.5"
+                  />
+                  <p className="text-xs uppercase tracking-[0.12em]">
+                    {categoryLabels[cat]}
+                  </p>
+                </div>
                 <div className="grid gap-3 md:grid-cols-2">
                   {list.map((s) => (
                     <button
@@ -258,9 +271,12 @@ export function StartClient({
               type="button"
               onClick={startSession}
               disabled={!readyToStart || submitting}
-              className="rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground disabled:opacity-60 disabled:cursor-not-allowed hover:brightness-95 transition"
+              className="group inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground disabled:opacity-60 disabled:cursor-not-allowed hover:brightness-95 transition"
             >
               {submitting ? "Starting…" : "Start session"}
+              {!submitting && (
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+              )}
             </button>
             <p className="text-xs text-muted-foreground">
               {flatScenarios.length} scenarios · guest mode

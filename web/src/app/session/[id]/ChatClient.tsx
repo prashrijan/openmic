@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { MessageSquareText, Send, Square } from "lucide-react";
 import type { MessageRow, Scenario, SessionRow } from "@/lib/types";
 
 interface Props {
@@ -186,8 +187,9 @@ export function ChatClient({ session, scenario, initialMessages }: Props) {
               type="button"
               onClick={handleEnd}
               disabled={ending}
-              className="mt-1 text-xs underline underline-offset-4 text-muted-foreground hover:text-foreground disabled:opacity-50"
+              className="mt-1 inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground disabled:opacity-50 transition"
             >
+              <Square className="w-3 h-3" strokeWidth={2} fill="currentColor" />
               {ending ? "Ending…" : "End session"}
             </button>
           </div>
@@ -203,9 +205,19 @@ export function ChatClient({ session, scenario, initialMessages }: Props) {
       <div className="flex-1 overflow-y-auto">
         <div className="mx-auto max-w-3xl px-6 py-8 space-y-6">
           {messages.length === 0 && !pendingAiText && (
-            <p className="text-sm text-muted-foreground">
-              Say something to begin. {aiLabel} is listening.
-            </p>
+            <div className="rounded-lg bg-card/50 border border-border/60 p-8 text-center">
+              <MessageSquareText
+                className="w-6 h-6 text-muted-foreground mx-auto mb-3"
+                strokeWidth={1.5}
+              />
+              <p className="text-sm text-foreground mb-1">
+                {aiLabel} is listening.
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Say something to begin. Anything works &mdash; hello, a
+                question, the situation you&rsquo;re practicing.
+              </p>
+            </div>
           )}
 
           {messages.map((m) => (
@@ -261,9 +273,11 @@ export function ChatClient({ session, scenario, initialMessages }: Props) {
           <button
             type="submit"
             disabled={!input.trim() || sending || timeUp || ending}
-            className="rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground disabled:opacity-50 hover:brightness-95 transition"
+            aria-label="Send message"
+            className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground disabled:opacity-50 hover:brightness-95 transition"
           >
-            Send
+            <Send className="w-4 h-4" strokeWidth={2} />
+            <span className="hidden sm:inline">Send</span>
           </button>
         </div>
       </form>

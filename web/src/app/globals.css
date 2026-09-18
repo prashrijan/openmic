@@ -82,7 +82,7 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground font-sans;
@@ -90,6 +90,19 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  /* Focus rings per DESIGN.md §Elevation:
+     "2px outset in falu red at 60%, with 2px offset." */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  /* Suppress mouse-click focus rings but preserve keyboard focus */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
   /* Fraunces carries the reading register — h1/h2/h3 by default.
      h4-h6 use the working register. See DESIGN.md §Typography. */
   h1, h2, h3 {
@@ -105,5 +118,11 @@
   h4, h5, h6 {
     @apply font-sans;
     font-weight: 700;
+  }
+
+  /* Selection uses the falu red family */
+  ::selection {
+    background: rgba(126, 66, 50, 0.15);
+    color: var(--foreground);
   }
 }
