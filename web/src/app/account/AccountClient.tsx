@@ -84,10 +84,13 @@ export function AccountClient({
 
   return (
     <>
-      <section className="mx-auto max-w-2xl px-6 py-8">
-        <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground mb-4">
-          Profile
-        </p>
+      <section className="mx-auto max-w-3xl px-6 py-12 md:py-16">
+        <div className="flex items-baseline justify-between gap-4 pb-4 mb-8 border-b border-border">
+          <h2 className="font-serif text-3xl tracking-tight">Profile</h2>
+          <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
+            Editable
+          </p>
+        </div>
 
         <form onSubmit={saveProfile} className="space-y-6">
           <div>
@@ -178,13 +181,16 @@ export function AccountClient({
       </section>
 
       {/* Delete account */}
-      <section className="mx-auto max-w-2xl px-6 py-12 border-t border-border">
-        <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground mb-3">
-          Delete account
-        </p>
-        <h2 className="font-serif text-xl tracking-tight mb-2">
+      <section className="mx-auto max-w-3xl px-6 py-12 md:py-16 border-t border-border">
+        <div className="flex items-baseline justify-between gap-4 pb-4 mb-8 border-b border-border">
+          <h2 className="font-serif text-3xl tracking-tight">Delete account</h2>
+          <p className="text-xs uppercase tracking-[0.14em] text-destructive">
+            Permanent
+          </p>
+        </div>
+        <h3 className="font-serif text-2xl tracking-tight mb-3">
           This can&rsquo;t be undone.
-        </h2>
+        </h3>
         <p className="text-sm text-muted-foreground leading-relaxed max-w-lg mb-5">
           Deletes your profile, every session, every transcript, and every
           feedback report. Guest cookies aren&rsquo;t affected, but there

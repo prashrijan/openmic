@@ -34,13 +34,26 @@ export default async function AccountPage() {
 
   return (
     <main className="flex-1">
-      <section className="mx-auto max-w-2xl px-6 pt-16 pb-6 md:pt-20">
-        <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground mb-3">
-          Account
-        </p>
-        <h1 className="font-serif text-3xl md:text-4xl leading-tight tracking-tight">
-          {user.email}
-        </h1>
+      {/* Editorial hero */}
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-6xl px-6 pt-16 pb-10 md:pt-24 md:pb-14">
+          <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground mb-5 inline-flex items-center gap-3">
+            <span className="w-8 h-px bg-primary" />
+            Account
+          </p>
+          <h1 className="font-serif text-5xl md:text-6xl leading-[1.02] tracking-tight text-foreground">
+            {user.email}
+          </h1>
+          <p className="mt-4 text-base text-muted-foreground">
+            Signed in with{" "}
+            {user.app_metadata?.provider === "google" ? "Google" : "email"} ·
+            member since{" "}
+            {new Date(user.created_at).toLocaleDateString(undefined, {
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
+        </div>
       </section>
 
       <AccountClient
